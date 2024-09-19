@@ -1,23 +1,17 @@
-
-require("dotenv").config();
-
 const express = require('express');
+const bodyParser = require('body-parser');
+const userRoutes = require('./routes/userRoutes');
+const dbConfig = require('./config/dbConfig');
 const mysql = require('mysql2');
+
 const app = express();
+const db = mysql.createConnection(dbConfig);
 
+// Middleware to parse JSON bodies
+app.use(bodyParser.json());
 
-
-const dbUsername =process.env.DB_USER
-const dbPass =process.env.DB_PASSWORD
-const dbHost =process.env.DB_HOST
-
-// MySQL connection configuration
-const db = mysql.createConnection({
-  host: dbHost,
-  user: dbUsername,
-  password: dbPass, 
-  database: 'user_rec_db'
-});
+// Middleware to parse URL-encoded bodies
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connect to MySQL
 db.connect((err) => {
@@ -25,9 +19,11 @@ db.connect((err) => {
     console.error('Error connecting to MySQL:', err.message);
     return;
   }
-
   console.log('Connected to MySQL database!');
 });
+
+// Use routes
+app.use('/api', userRoutes);
 
 // Sample route
 app.get('/', (req, res) => {
@@ -36,11 +32,5 @@ app.get('/', (req, res) => {
 
 const PORT = 3383;
 app.listen(PORT, () => {
-
-
-  
-  console.log(dbUsername)
-  console.log(dbPass)
-  console.log(dbHost)
   console.log(`Server is running on port ${PORT}`);
 });
