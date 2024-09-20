@@ -4,14 +4,10 @@ const userService = require("../services/userService");
 const createUser = async (req, res) => {
   try {
     const user = req.body;
-    console.log(
-      "🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 "
-    );
+    console.log("🔥 -- Printing Request Body ");
 
     console.log(user);
-    console.log(
-      "🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 "
-    );
+    console.log(      "--------------------------------------------------- "    );
     const result = await userService.createUser(user);
     res.status(201).json({ id: result.insertId, ...user });
   } catch (err) {
