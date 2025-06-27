@@ -4,11 +4,11 @@ const userService = require("../services/userService");
 const createUser = async (req, res) => {
   try {
     const user = req.body;
-    console.log("🔥 -- Printing Request Body ");
-
-    console.log(user);
-    console.log(      "--------------------------------------------------- "    );
+    // console.log("🔥 -- Printing Request Body ");
+    // console.log(user);
+    // console.log(      "--------------------------------------------------- "    );
     const result = await userService.createUser(user);
+    // Returns the newly created user's ID along with the user data.
     res.status(201).json({ id: result.insertId, ...user });
   } catch (err) {
     res.status(500).json({ error: err.message });
